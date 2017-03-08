@@ -9,7 +9,7 @@
 "use strict"
 
 class Location{
-	constructor(name, address, lat, long){
+	constructor(name, address, lat = null, long = null){
 		this._name = name;
 		this._address = address;
 		this._lat = lat;

@@ -1,0 +1,76 @@
+/*
+ *	Created by Adam Sandström
+ *	(c) 2017
+ *
+ *	adsa95@gmail.com
+ *	www.adsa.se
+ */
+
+"use strict"
+
+let Location = require('./Location.js');
+let Vehicle = require('./Vehicle.js');
+
+class Query{
+	constructor(){
+		this._from = new Location();
+		this._to = new Location();
+		this._bothWays = false;
+		this._vehicle = new Vehicle();
+		this._start = null;
+		this._end = null;
+		this._extras = {};
+	}
+
+	getExra(key){
+		return this._extras[key];
+	}
+
+	setExtra(key, value){
+		this._extras[key] = value;
+	}
+
+	from(locString){
+		this._from = new Location(locString);
+		return this;
+	}
+
+	to(locString){
+		this._to = new Location(locString);
+		return this;
+	}
+
+	between(locString1, locString2){
+		this._from = new Location(locString1);
+		this._to = new Location(locString2);
+		this._bothWays = true;
+		return this;
+	}
+
+	car(model, type, automatic){
+		return this.vehicle(model, type, automatic);
+	}
+
+	vehicle(model, type = null, automatic = null){
+		this._vehicle = new Vehicle(model, type, automatic);
+		return this;
+	}
+
+	match(trip){
+		if(!this._from.isEmpty() && !trip.getFrom().match(this._from)){
+			return false;
+		}
+
+		if(!this._to.isEmpty() && !trip.getTo().match(this._to)){
+			return false;
+		}
+
+		if(!this._vehicle.isEmpty() && !trip.getVehicle().match(this._vehicle)){
+			return false;
+		}
+
+		return true;
+	}
+}
+
+module.exports = Query;

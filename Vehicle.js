@@ -26,6 +26,12 @@ class Vehicle{
 	match(vehicle){
 		return this._model.toLowerCase().indexOf(vehicle._model.toLowerCase()) !== -1;
 	}
+
+	toString(){
+		let res = this._model;
+		if(this._type) res += ' (' + this._type + ')';
+		return res;
+	}
 }
 
 module.exports = Vehicle;

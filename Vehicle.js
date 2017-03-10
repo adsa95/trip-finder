@@ -20,7 +20,7 @@ class Vehicle{
 	}
 
 	hasDetails(){
-		return (this._type && this._automatic);
+		return (this._type !== null && this._automatic !== null);
 	}
 
 	match(vehicle){

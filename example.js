@@ -1,9 +1,9 @@
 "use strict"
 
-let TripFinder = require('./TripFinder.js');
+let TripFinder = require('trip-finder');
 
-//TripFinder.addProvider(require('freerider'));
-TripFinder.addProvider(require('./DriveBackProvider.js'));
+TripFinder.addProvider(require('trip-finder-freerider'));
+TripFinder.addProvider(require('trip-finder-driveback'));
 
 let routes = [
     TripFinder.Query().to('göteborg').car('CLA')
@@ -13,6 +13,5 @@ let routes = [
 TripFinder.fetch(function(collection){
 	// callback gets a conainer that has all trips and convenience methods to search them
 	let allTrips = collection.getTrips();
-    let res = collection.findAny(routes)
-    console.log(res);
+    let matchingTrips = collection.findAny(routes)
 })

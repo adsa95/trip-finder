@@ -20,6 +20,7 @@ class Query{
 		this._start = null;
 		this._end = null;
 		this._extras = {};
+		this._provider = '*';
 	}
 
 	getExra(key){
@@ -60,18 +61,24 @@ class Query{
 		return this;
 	}
 
+	provider(provider){
+		this._provider = provider;
+		return this;
+	}
+
 	match(trip){
 		let match_fr = (this._from.isEmpty() || trip.getFrom().match(this._from));
 		let match_to = (this._to.isEmpty() || trip.getTo().match(this._to));
 		let match_car = (this._vehicle.isEmpty() || trip.getVehicle().match(this._vehicle));
+		let match_provider = (this._provider == '*' || trip._provider.toLowerCase().indexOf(this._provider.toLowerCase()) !== -1);
 		
-		if(match_fr && match_to && match_car){
+		if(match_fr && match_to && match_car && match_provider){
 			return true;
 		}else if(this._bothWays){
 			let match_opp_fr = (this._to.isEmpty() || trip.getFrom().match(this._to));
 			let match_opp_to = (this._from.isEmpty() || trip.getTo().match(this._from));
 
-			return (match_opp_to && match_opp_fr && match_car);
+			return (match_opp_to && match_opp_fr && match_car && match_provider);
 		}
 	}
 }

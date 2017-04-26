@@ -47,6 +47,10 @@ class Query{
 		return this;
 	}
 
+	fromOrTo(locString){
+		return this.between(locString, '*');
+	}
+
 	car(model, type, automatic){
 		return this.vehicle(model, type, automatic);
 	}

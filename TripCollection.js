@@ -27,6 +27,10 @@ class TripCollection{
 		return this._trips;
 	}
 
+	setTrips(trips){
+		this._trips = trips;
+	}
+
 	find(query){
 		let result = [];
 

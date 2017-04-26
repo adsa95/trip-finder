@@ -57,19 +57,18 @@ class Query{
 	}
 
 	match(trip){
-		if(!this._from.isEmpty() && !trip.getFrom().match(this._from)){
-			return false;
-		}
+		let match_fr = (this._from.isEmpty() || trip.getFrom().match(this._from));
+		let match_to = (this._to.isEmpty() || trip.getTo().match(this._to));
+		let match_car = (this._vehicle.isEmpty() || trip.getVehicle().match(this._vehicle));
+		
+		if(match_fr && match_to && match_car){
+			return true;
+		}else if(this._bothWays){
+			let match_opp_fr = (this._to.isEmpty() || trip.getFrom().match(this._to));
+			let match_opp_to = (this._from.isEmpty() || trip.getTo().match(this._from));
 
-		if(!this._to.isEmpty() && !trip.getTo().match(this._to)){
-			return false;
+			return (match_opp_to && match_opp_fr && match_car);
 		}
-
-		if(!this._vehicle.isEmpty() && !trip.getVehicle().match(this._vehicle)){
-			return false;
-		}
-
-		return true;
 	}
 }
 
